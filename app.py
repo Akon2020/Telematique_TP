@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime
+import time
 import random
 
 app = Flask(__name__)
+
+def calcul_checksum(check):
+    checksum = 0
+    for char in check:
+        checksum ^= ord(char)
+    return f"{checksum:02X}"
 
 def analyser_gpgga(gpgga):
     parties = gpgga.split(',')
@@ -44,15 +50,19 @@ def generer_gpgsa(donnees_gpgga):
     # return "$GPGSA,A,3,04,05,..,29,31,.,1.8,1.0,1.5*30"
 
 def generer_gprmc(donnees_gpgga):
-    maintenant = datetime.utcnow().strftime("%H%M%S.000")
-    lat = donnees_gpgga['latitude']
-    dir_lat = donnees_gpgga['direction_latitude']
-    lon = donnees_gpgga['longitude']
-    dir_lon = donnees_gpgga['direction_longitude']
-    vitesse = "0.5"
-    date = datetime.utcnow().strftime("%d%m%y")
-    
-    return f"$GPRMC,{maintenant},A,{lat},{dir_lat},{lon},{dir_lon},{vitesse},054.7,{date},,,A*7C"
+    maintenant = time.strftime("%H%M%S", time.gmtime())
+    status = 'A'
+    latitude = f"{random.randint(0, 89)}{random.uniform(0, 59.999):06.3f},N"
+    longitude = f"{random.randint(0, 179)}{random.uniform(0, 59.999):06.3f},E"
+    vitesse = f"{random.uniform(0, 100):05.1f}"
+    angle = f"{random.uniform(0, 360):05.1f}"
+    date = time.strftime("%d%m%y", time.gmtime())
+    variationMagn = f"{random.uniform(0, 15):05.1f},W"
+    gprmc = f"GPRMC,{maintenant},{status},{latitude},{longitude},{vitesse},{angle},{date},{variationMagn}"
+    checksum = calcul_checksum(gprmc)
+
+    return f"${gprmc}*{checksum}"
+
 
 @app.route('/')
 def index():
