@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Trames sauvegardées{% endblock %}
+
+{% block content%}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
+  <h1 class="text-2xl font-bold mb-6 text-center">Trames NMEA sauvegardées</h1>
+  <table class="min-w-full bg-white border border-gray-200">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">
+          Trame
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ligne in contenu %}
+      <tr>
+        <td class="border-t px-4 py-2 text-sm text-gray-700">{{ ligne }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="mt-6">
+    <a
+      href="/"
+      class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+      >Retourner</a
+    >
+  </div>
+</div>
+{% endblock %}

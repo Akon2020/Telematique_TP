@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Résultats de conversion{% endblock %}
+
+{% block content%}
+<div class="min-w-lg mx-auto bg-white p-8 rounded-lg shadow">
+  <h1 class="text-2xl font-bold mb-6 text-center">
+    Résultats de la conversion
+  </h1>
+  <p><strong>GPGSA :</strong> {{ gpgsa }}</p>
+  <p><strong>GPRMC :</strong> {{ gprmc }}</p>
+  <div class="mt-6">
+    <a
+      href="/"
+      class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+      >Retourner</a
+    >
+    <a
+      href="/trames"
+      class="ml-2 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+      >Voir Trames</a
+    >
+  </div>
+</div>
+{% endblock %}

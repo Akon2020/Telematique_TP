@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content%}
+<div class="w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow">
+  <h1 class="text-2xl font-bold mb-6 text-center">
+    Convertir les trames NMEA GPGGA
+  </h1>
+  <form action="/convertir" method="POST" class="space-y-4">
+    <div>
+      <label for="message_gpgga" class="block text-sm font-medium text-gray-700"
+        >Message GPGGA :</label
+      >
+      <input
+        type="text"
+        id="message_gpgga"
+        name="message_gpgga"
+        placeholder="Entrez la trame GPGGA en commeçant par $"
+        required
+        class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+    </div>
+    <button
+      type="submit"
+      class="w-full bg-indigo-600 text-white py-2 rounded-md font-medium hover:bg-indigo-700"
+    >
+      Convertir
+    </button>
+  </form>
+</div>
+{% endblock %}
