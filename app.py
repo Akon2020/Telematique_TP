@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
+import random
 
 app = Flask(__name__)
 
@@ -28,15 +29,18 @@ def analyser_gpgga(gpgga):
 def generer_gpgsa(donnees_gpgga):
     mode = "A"
     fix_type = donnees_gpgga['qualite']
-    prns = ["04", "05", "13", "15", "18", "19", "20", "21", "22", "23", "24", "25"]
+    prns = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
     prns = prns[:int(donnees_gpgga['satellites'])]
     while len(prns) < 12:
         prns.append('')
-    pdop = "1.8"
-    hdop = "1.0"
-    vdop = "1.5"
+    pdop = round(random.uniform(1, 1.9), 1)
+    hdop = round(random.uniform(1, 1.9), 1)
+    vdop = round(random.uniform(1, 1.9), 1)
     gpgsa = f"$GPGSA,{mode},{fix_type}," + ",".join(prns) + f",{pdop},{hdop},{vdop}*30"
     return gpgsa
+    # pdop = "1.0"
+    # hdop = "1.0"
+    # vdop = "1.0"
     # return "$GPGSA,A,3,04,05,..,29,31,.,1.8,1.0,1.5*30"
 
 def generer_gprmc(donnees_gpgga):
