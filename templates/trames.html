@@ -2,7 +2,7 @@
 
 {% block title %}Trames sauvegardées{% endblock %}
 
-{% block content%}
+{% block content %}
 <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
   <h1 class="text-2xl font-bold mb-6 text-center">Trames NMEA sauvegardées</h1>
   <table class="min-w-full bg-white border border-gray-200">
@@ -14,10 +14,22 @@
       </tr>
     </thead>
     <tbody>
+      {% set index = 0 %}
       {% for ligne in contenu %}
       <tr>
-        <td class="border-t px-4 py-2 text-sm text-gray-700">{{ ligne }}</td>
+        <td class="border-t px-4 py-2 text-sm text-gray-700">
+          {% if index == 0 %}
+            <strong>GPGGA: </strong>{{ ligne }}
+          {% elif index == 1 %}
+            <strong>GPGSA: </strong>{{ ligne }}
+          {% elif index == 2 %}
+            <strong>GPRMC: </strong>{{ ligne }}
+          {% else %}
+            {{ ligne }}
+          {% endif %}
+        </td>
       </tr>
+      {% set index = index + 1 %}
       {% endfor %}
     </tbody>
   </table>

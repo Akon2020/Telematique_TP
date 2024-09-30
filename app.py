@@ -44,10 +44,6 @@ def generer_gpgsa(donnees_gpgga):
     vdop = round(random.uniform(1, 1.9), 1)
     gpgsa = f"$GPGSA,{mode},{fix_type}," + ",".join(prns) + f",{pdop},{hdop},{vdop}*30"
     return gpgsa
-    # pdop = "1.0"
-    # hdop = "1.0"
-    # vdop = "1.0"
-    # return "$GPGSA,A,3,04,05,..,29,31,.,1.8,1.0,1.5*30"
 
 def generer_gprmc(donnees_gpgga):
     maintenant = time.strftime("%H%M%S", time.gmtime())
@@ -78,9 +74,9 @@ def convertir():
     
 
     with open("trames_nmea.txt", "w") as fichier:
-        fichier.write(f"GPGGA: {message_gpgga}\n")
-        fichier.write(f"GPGSA: {trame_gpgsa}\n")
-        fichier.write(f"GPRMC: {trame_gprmc}\n")
+        fichier.write(f"{message_gpgga}\n")
+        fichier.write(f"{trame_gpgsa}\n")
+        fichier.write(f"{trame_gprmc}\n")
     
     return render_template('resultat.html', gpgsa=trame_gpgsa, gprmc=trame_gprmc)
 
